@@ -1,13 +1,12 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'https://api-proyectofinal-g7ete8f3bvcsf7ch.centralus-01.azurewebsites.net/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json'
   }
 });
 
-// Interceptor para inyectar token desde localStorage (clave: 'token')
 api.interceptors.request.use(
   (config) => {
     try {
@@ -17,7 +16,7 @@ api.interceptors.request.use(
         config.headers.Authorization = `Bearer ${token}`;
       }
     } catch (err) {
-      // localStorage puede fallar en contextos no-browser; ignorar en ese caso
+      
     }
     return config;
   },
